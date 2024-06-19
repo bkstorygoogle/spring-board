@@ -1,16 +1,21 @@
 package com.example.demo.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.example.demo.dto.Article;
-
 @Mapper // 이렇게 해주면 ArticleDao의 구현체를 마이바티스가 대신 구현해준다.
 public interface ArticleDao {
 	
-	public List<Article> getList();
+	public List<ArrayList> getVue(Map<String, Object> param);
+	
+	public List<ArrayList> getHeader(Map<String, Object> param);
+	
+	public List<ArrayList> getData(Map<String, Object> param);
+	
+	public List<ArrayList> getList();
 
 	public void add(Map<String, Object> param);
 

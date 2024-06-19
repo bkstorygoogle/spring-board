@@ -3,19 +3,42 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:set var="pageName" value="게시물 리스트" />
+
 <%@ include file="../part/head.jspf"%>
 
 <h2 class="con">전체 게시물 개수 : ${totalCount}</h2>
 
-<div class="con">
-	<c:forEach items="${list}" var="article">
-		<section>
-			<a href="./detail?id=${article.id}">번호 : ${article.id}, 제목 :
-				${article.title}, 조회수 : ${article.hit}</a>
-		</section>
-		<hr>
-	</c:forEach>
-</div>
+    
+   <table border=1 width=1000 >
+	    <tr>
+	    <c:forEach items="${table_info}" var="table_info">
+			 <td> ${table_info.COLUMN_NAME } </td>	
+		</c:forEach>
+		</tr>
+		
+		<tr>
+	    <c:forEach items="${table_info}" var="table_info">
+			 <td> ${table_info.COLUMN_COMMENT} </td>	
+		</c:forEach>
+		</tr>
+	
+	    <c:forEach var="rowData" items="${list}">
+	    <tr>	      
+	        <c:forEach var="cellData" items="${rowData}" >
+	            <td>
+	            	            
+	              <c:out value="${cellData.value}"></c:out>	      
+	             
+	              
+	            </td>	            
+	        </c:forEach>
+	    </tr>
+	    </c:forEach>
+	    
+
+
+	    
+	</table>
 
 <div class="btns con">
 	<a href="./add">게시물 추가</a>

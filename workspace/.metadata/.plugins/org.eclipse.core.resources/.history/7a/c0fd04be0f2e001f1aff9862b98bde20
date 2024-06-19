@@ -1,0 +1,13 @@
+package com.example.demo.controller;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.extern.slf4j.Slf4j;
+
+@CrossOrigin(origins = "http://localhost:8800" )
+@RestController
+@Slf4j // 이걸 해야 log.info(..) 가 가능, 디버깅 용도
+public class VueController {
+
+}

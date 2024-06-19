@@ -1,25 +1,34 @@
 package com.example.demo.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.Article;
+import com.example.demo.dto.ResultDTO;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.service.ArticleService;
 
 import lombok.extern.slf4j.Slf4j;
 
+@CrossOrigin(origins = "http://localhost:8800" )
 @Controller
 @Slf4j // 이걸 해야 log.info(..) 가 가능, 디버깅 용도
 public class ArticleController {
 	@Autowired
 	ArticleService articleService;
+	
+	
 
 	@RequestMapping("/article/detail")
 	public String showDetail(Model model, long id) {
@@ -41,17 +50,55 @@ public class ArticleController {
 
 		return "article/modify";
 	}
+	
+	
 
-	@RequestMapping("/article/list")
-	public String showList(Model model) {
-		List<Article> list = articleService.getList();
-		int totalCount = articleService.getTotalCount();
+	@RequestMapping("/article/list2")
+	public String showList2(Model model) {
+	    
+		Map<String, Object> params = new HashMap<>();
+		
+		params.put("SCHEMA", "EDU");
+		params.put("TABLE", "ARTICLE");        
+        
+        List<ArrayList> table_info = articleService.getHeader(params);
+        
+		List<ArrayList> list = articleService.getData(params);
+		
+		int totalCount = list.size();
 
+		model.addAttribute("table_info", table_info);
+		
 		model.addAttribute("list", list);
+		
 		model.addAttribute("totalCount", totalCount);
 
-		return "article/list";
+		return "article/list2";
 	}
+	
+	@RequestMapping("/article/list")
+	public String showList(Model model) {
+		
+		Map<String, Object> params = new HashMap<>();
+		
+		params.put("SCHEMA", "EDU");
+		params.put("TABLE", "ARTICLE");        
+        
+        List<ArrayList> table_info = articleService.getHeader(params);
+        
+		List<ArrayList> list = articleService.getData(params);
+		
+		int totalCount = list.size();
+
+		model.addAttribute("table_info", table_info);
+		
+		model.addAttribute("list", list);
+		
+		model.addAttribute("totalCount", totalCount);
+
+		return "article/list2";
+	}
+
 
 	@RequestMapping("/article/add")
 	public String showAdd() {

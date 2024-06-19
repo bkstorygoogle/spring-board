@@ -6,7 +6,6 @@
 <head>
 <meta charset="UTF-8">
 <title>커뮤니티 사이트 - ${pageName}</title>
-<link rel="stylesheet" href="/resource/common.css">
 
 </head>
 <body>
