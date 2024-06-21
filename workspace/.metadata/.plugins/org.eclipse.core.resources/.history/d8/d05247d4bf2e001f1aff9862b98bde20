@@ -1,0 +1,54 @@
+package com.example.demo.controller;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.example.demo.dto.ResultDTO;
+import com.example.demo.service.ArticleService;
+
+public interface ApiCallController {
+    
+	private ResultDTO rDto;
+	
+	@Autowired
+	ArticleService articleService;
+	
+	@RequestMapping("/findAll")	
+	public ResultDTO findAll(Model model) {
+		
+	
+		String url = "http://localhost:8014/itf/sap/orderList" ; 
+		
+        Map<String, Object> params = new HashMap<>();
+		
+		params.put("audatLow","2023-06-22");		
+		params.put("audatHigh","2024-06-18");
+		
+		params.put("kunnrLow","340523");
+		params.put("pernrLow","23080503");		
+		
+		 
+		rDto = new ResultDTO();
+		    
+	    List<ArrayList> resultList = articleService.getVue(params);
+		    
+	    if(resultList != null){
+	        rDto.setMessage("success");
+	    	rDto.setState(true);
+	        rDto.setResult(resultList);
+	    } else {
+	    	rDto.setMessage("fail");
+	        rDto.setState(false);
+	        rDto.setResult("");
+	    }
+	    
+		return rDto;
+		
+	}
+}

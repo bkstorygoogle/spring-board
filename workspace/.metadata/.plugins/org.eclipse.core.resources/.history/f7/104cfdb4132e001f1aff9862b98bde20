@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.example.demo.dto.ArticleDao">
+       
+
+    <select id="getHeader" parameterType="map" resultType="hashmap">
+	    SELECT TT.COLUMN_NAME    
+		     , TT.COLUMN_COMMENT  
+		FROM (
+		        SELECT T.TABLE_NAME 
+		             , C.COLUMN_NAME
+		             , C.COLUMN_COMMENT
+		             , C.ORDINAL_POSITION
+		             , C.COLUMN_TYPE
+		             , C.IS_NULLABLE
+		             , C.COLUMN_DEFAULT
+		             , C.COLUMN_KEY   
+		          FROM INFORMATION_SCHEMA.TABLES  AS T  /* 테이블 정보 */
+		             , INFORMATION_SCHEMA.COLUMNS AS C  /* 컬럼 정보 */
+		         WHERE T.TABLE_SCHEMA = #{SCHEMA}
+		           AND T.TABLE_NAME   = #{TABLE}
+		           AND T.TABLE_NAME   = C.TABLE_NAME   
+		       ) TT
+		  LEFT JOIN INFORMATION_SCHEMA.STATISTICS IDX   /* INDEX 정보 */
+		         ON TT.TABLE_NAME    = IDX.TABLE_NAME
+		        AND TT.COLUMN_NAME   = IDX.COLUMN_NAME
+		 ORDER BY TT.ORDINAL_POSITION
+    </select>
+
+    <select id="getData" parameterType="map" resultType="hashmap">
+		SELECT * FROM ${TABLE}
+		WHERE 1=1
+	</select>
+
+	<select id="getList" parameterType="map" resultType="com.example.demo.dto.Article">
+		SELECT *
+		FROM article ORDER BY id DESC
+	</select>
+
+	<select id="getOne" parameterType="long" resultType="com.example.demo.dto.Article">
+		SELECT *
+		FROM article
+		WHERE id = #{id}
+	</select>
+
+	<select id="getTotalCount" parameterType="map" resultType="int">
+		SELECT COUNT(*)
+		FROM article
+	</select>
+
+	<delete id="delete" parameterType="long">
+		DELETE FROM article
+		WHERE id =
+		#{id}
+	</delete>
+
+	<insert id="add" parameterType="map" useGeneratedKeys="true"
+		keyProperty="id">
+		INSERT INTO article
+		SET regDate = NOW(),
+		title = #{title},
+		body = #{body}
+	</insert>
+
+	<update id="modify" parameterType="map">
+		UPDATE article
+		SET title = #{title},
+		body = #{body}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="hitUp" parameterType="long">
+		UPDATE article
+		SET hit = hit + 1
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

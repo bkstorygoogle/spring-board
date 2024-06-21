@@ -6,7 +6,8 @@ import lombok.Data;
 public class ResultDTO {
 
   private Boolean state;
-  private Object result;
   private String message;
+  private Object result;
+
 
 }

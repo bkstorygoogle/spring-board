@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.dto.ResultDTO;
-import com.example.demo.dto.UserDTO;
 import com.example.demo.service.ArticleService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,43 +32,24 @@ public class VueController {
 		
         Map<String, Object> params = new HashMap<>();
 		
-		params.put("SCHEMA", "EDU");
-		params.put("TABLE", "USER3");  	
+		params.put("SCHEMA", "EDU");		
+		params.put("QUERY", " SELECT * FROM EDU.USER3 WHERE DEL=0 ");
+		
 		
 		rDto = new ResultDTO();
-		
-		    List<ArrayList> resultList =articleService.getData(params);		
+		    
+		    List<ArrayList> resultList =articleService.getVue(params);
+		    
 		    if(resultList != null){
 		        rDto.setMessage("success");
 		    	rDto.setState(true);
-		      rDto.setResult(resultList);
+		        rDto.setResult(resultList);
 		    } else {
-		      rDto.setState(false);
+		        rDto.setState(false);
 		    }
 		    
 		return rDto;
 		
 	}
 	
-	@RequestMapping("/findAll2")	
-	public ResultDTO findAll2(Model model) {
-		
-        Map<String, Object> params = new HashMap<>();
-		
-		params.put("SCHEMA", "EDU");
-		params.put("TABLE", "USER3");  		
-	
-		
-		rDto = new ResultDTO();
-		    List<UserDTO> resultList =articleService.getVue(params);		
-		    if(resultList != null){
-		      rDto.setState(true);
-		      rDto.setResult(resultList);
-		    } else {
-		      rDto.setState(false);
-		    }
-		    
-		return rDto;
-		
-	}
 }

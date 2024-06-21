@@ -3,11 +3,7 @@
 
 
 <mapper namespace="com.example.demo.dto.ArticleDao">
-    
-    <select id="getVue" parameterType="map" resultType="com.example.demo.dto.UserDTO">
-		SELECT * FROM ${TABLE}
-		WHERE 1=1
-	</select>
+       
 
     <select id="getHeader" parameterType="map" resultType="hashmap">
 	    SELECT TT.COLUMN_NAME    
@@ -32,6 +28,12 @@
 		        AND TT.COLUMN_NAME   = IDX.COLUMN_NAME
 		 ORDER BY TT.ORDINAL_POSITION
     </select>
+    
+    
+    <select id="getVue" parameterType="map" resultType="hashmap">
+		${QUERY}		
+	</select>
+    
 
     <select id="getData" parameterType="map" resultType="hashmap">
 		SELECT * FROM ${TABLE}
